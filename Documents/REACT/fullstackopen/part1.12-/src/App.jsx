@@ -13,6 +13,7 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -27,10 +28,24 @@ const App = () => {
   //when clicked, generates random number,
   //then, updates the state
 
+  const addVote = () => {
+    const newVotes = [...votes];
+    newVotes[selected]++;
+    setVotes(newVotes);
+  };
+
+  const maxVotesIndex = votes.indexOf(Math.max(...votes));
+  //find index of anecdote with highest votes
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <button onClick={addVote}>vote</button>
       <button onClick={handleClick}>next anecdote</button>
+      <h2>anecdote with most votes</h2>
+      <p>{anecdotes[maxVotesIndex]}</p>
+      <p>has {votes[maxVotesIndex]} votes</p>
     </div>
   );
 };
